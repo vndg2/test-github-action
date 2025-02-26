@@ -21,10 +21,10 @@ jobs:
       - name: verify maven installation
         run: mvn -version
 
-      - name: setup maven
-        uses: stCarolas/setup-maven@4.4
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v5
         with:
-          maven-version: 4.0.0
+          maven-version: 3.8.2
         if: failure()
 
       - name: run test
