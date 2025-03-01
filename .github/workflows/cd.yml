@@ -3,7 +3,8 @@ name: CD
 on:
   push:
     branches: [ main, master, product]
-
+  pull_request:
+    branches: [ master, main ]
 jobs:
   deployment:
     runs-on: ubuntu-latest
@@ -26,8 +27,17 @@ jobs:
           maven-version: 3.8.2
         if: failure()
 
+
       - name: build file with maven
-        uses: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       - name: run application by maven
-        uses: mvn springboot:run
+        run: | 
+          cd target
+          nohup java -jar my-app-0.0.1.jar > app.log 2>&1 &
+          sleep 10
+          curl -I http://localhost:8080/actuator/health || (echo "Application can not run" && exit 1)
+
+      - name: Show log if error
+        if: failure()
+        run: cat app.log
