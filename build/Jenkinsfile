@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {echo 'cloning...'}
+        }
+        stage('Build') {
+            steps {echo 'building...'}
+        }
+        stage('Test') {
+            steps {echo 'testing...'}
+        }
+    }
+
+    post {
+
+        always {echo 'done!'}
+    }
+}
