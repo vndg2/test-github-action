@@ -17,7 +17,12 @@ pipeline {
     }
 
     post {
-
-        always {echo 'done!'}
+        success {
+          echo "Build succeeded!"
+        }
+        failure {
+          echo "Build failed!"
+        }
     }
+
 }
